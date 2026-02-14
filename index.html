@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Message For You</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom Animations & Styles */
+        :root {
+            --primary-glow: rgba(255, 100, 100, 0.6);
+            --text-glow: 0 0 10px rgba(255, 182, 193, 0.5), 0 0 20px rgba(255, 105, 180, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            height: 100dvh; /* dynamic viewport for mobile browser chrome */
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            overflow: hidden;
+            background-color: #0a0208;
+        }
+
+        /* Cinematic Background with animated gradient */
+        .bg-cinematic {
+            background: radial-gradient(ellipse at 30% 50%, #3a0015 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 50%, #2a0020 0%, transparent 50%),
+                        radial-gradient(circle at center, #1a0008 0%, #0a0208 100%);
+            animation: bgShift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgShift {
+            0% { background-position: 0% 50%, 100% 50%, center; }
+            100% { background-position: 100% 50%, 0% 50%, center; }
+        }
+
+        /* Ambient light orbs */
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            animation: orbFloat 12s ease-in-out infinite alternate;
+        }
+
+        .orb-1 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(255, 50, 80, 0.15), transparent 70%);
+            top: -100px; left: -100px;
+            animation-delay: 0s;
+        }
+        .orb-2 {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(200, 50, 150, 0.12), transparent 70%);
+            bottom: -50px; right: -50px;
+            animation-delay: -4s;
+            animation-duration: 15s;
+        }
+        .orb-3 {
+            width: 250px; height: 250px;
+            background: radial-gradient(circle, rgba(255, 100, 150, 0.1), transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -8s;
+            animation-duration: 18s;
+        }
+
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -20px) scale(1.1); }
+            66% { transform: translate(-20px, 15px) scale(0.9); }
+            100% { transform: translate(15px, -10px) scale(1.05); }
+        }
+
+        /* Vignette Effect */
+        .vignette {
+            background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.7) 100%);
+            pointer-events: none;
+        }
+
+        /* Starfield / Sparkle Particles */
+        .sparkle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            animation-delay: var(--delay);
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: var(--max-opacity); transform: scale(1); box-shadow: 0 0 6px 2px rgba(255, 200, 220, 0.6); }
+        }
+
+        /* Floating Hearts Animation */
+        .heart-particle {
+            position: absolute;
+            bottom: -60px;
+            pointer-events: none;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        .heart-particle.style-a {
+            animation: floatUpDrift var(--dur) ease-out forwards;
+        }
+        .heart-particle.style-b {
+            animation: floatUpSpin var(--dur) ease-in-out forwards;
+        }
+        .heart-particle.style-c {
+            animation: floatUpZigzag var(--dur) ease-out forwards;
+        }
+
+        @keyframes floatUpDrift {
+            0% { transform: translateY(0) translateX(0) scale(0.3) rotate(0deg); opacity: 0; }
+            8% { opacity: 0.7; }
+            50% { transform: translateY(-55vh) translateX(30px) scale(0.8) rotate(15deg); opacity: 0.5; }
+            100% { transform: translateY(-115vh) translateX(-20px) scale(0.4) rotate(-10deg); opacity: 0; }
+        }
+
+        @keyframes floatUpSpin {
+            0% { transform: translateY(0) scale(0.4) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            100% { transform: translateY(-115vh) scale(1) rotate(540deg); opacity: 0; }
+        }
+
+        @keyframes floatUpZigzag {
+            0%   { transform: translateY(0) translateX(0) scale(0.3); opacity: 0; }
+            10%  { opacity: 0.6; }
+            25%  { transform: translateY(-28vh) translateX(40px) scale(0.7); }
+            50%  { transform: translateY(-55vh) translateX(-30px) scale(0.9); }
+            75%  { transform: translateY(-83vh) translateX(20px) scale(0.6); }
+            100% { transform: translateY(-115vh) translateX(-10px) scale(0.3); opacity: 0; }
+        }
+
+        /* Slide Transition Classes */
+        .slide-hidden {
+            opacity: 0;
+            transform: scale(0.92) translateY(30px);
+            filter: blur(8px);
+            pointer-events: none;
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .slide-active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            filter: blur(0px);
+            pointer-events: auto;
+            transition: all 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Staggered child reveal */
+        .slide-active .slide-child {
+            animation: revealUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            opacity: 0;
+        }
+        .slide-active .slide-child:nth-child(1) { animation-delay: 0.1s; }
+        .slide-active .slide-child:nth-child(2) { animation-delay: 0.3s; }
+        .slide-active .slide-child:nth-child(3) { animation-delay: 0.5s; }
+        .slide-active .slide-child:nth-child(4) { animation-delay: 0.7s; }
+        .slide-active .slide-child:nth-child(5) { animation-delay: 0.85s; }
+
+        @keyframes revealUp {
+            from { opacity: 0; transform: translateY(25px); filter: blur(4px); }
+            to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        /* Text Glow Animation */
+        .glow-text {
+            text-shadow: var(--text-glow);
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 182, 193, 0.4); }
+            50% { text-shadow: 0 0 30px rgba(255, 105, 180, 0.9), 0 0 60px rgba(255, 80, 120, 0.3), 0 0 10px white; }
+        }
+
+        /* Slide icon float */
+        .icon-float {
+            animation: iconBob 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 12px rgba(255, 120, 180, 0.5));
+        }
+
+        @keyframes iconBob {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.1); }
+        }
+
+        /* Decorative line */
+        .deco-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 150, 180, 0.6), transparent);
+            margin: 0 auto;
+            animation: lineExpand 1.5s ease-out forwards;
+            transform: scaleX(0);
+        }
+
+        .slide-active .deco-line {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes lineExpand {
+            from { transform: scaleX(0); opacity: 0; }
+            to { transform: scaleX(1); opacity: 1; }
+        }
+
+        /* Final Slide Special Effects */
+        .final-title {
+            font-family: 'Great Vibes', cursive;
+            background: linear-gradient(135deg, #ff6b8a, #ff9ec4, #ffd4e8, #ff9ec4, #ff6b8a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 300% auto;
+            animation: shine 4s linear infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 100, 150, 0.4));
+        }
+
+        @keyframes shine {
+            0% { background-position: 0% center; }
+            100% { background-position: 300% center; }
+        }
+
+        /* Pulsing ring behind final slide */
+        .pulse-ring {
+            position: absolute;
+            width: 300px; height: 300px;
+            border: 2px solid rgba(255, 120, 170, 0.2);
+            border-radius: 50%;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            animation: pulseRing 3s ease-out infinite;
+            pointer-events: none;
+        }
+        .pulse-ring:nth-child(2) { animation-delay: 1s; }
+        .pulse-ring:nth-child(3) { animation-delay: 2s; }
+
+        @keyframes pulseRing {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+        }
+
+        /* Glassmorphism for Controls — polished */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 150, 180, 0.3);
+            box-shadow: 0 4px 25px rgba(255, 100, 150, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Progress bar glow */
+        .progress-track {
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-track::after {
+            content: '';
+            position: absolute;
+            top: -2px; bottom: -2px;
+            left: 0; right: 0;
+            border-radius: 999px;
+            pointer-events: none;
+        }
+
+        #progress-bar {
+            background: linear-gradient(90deg, #ff6b8a, #ff9ec4, #ff6b8a);
+            background-size: 200% 100%;
+            animation: progressShine 2s linear infinite;
+            box-shadow: 0 0 10px rgba(255, 100, 150, 0.5);
+        }
+
+        @keyframes progressShine {
+            0% { background-position: -100% 0; }
+            100% { background-position: 100% 0; }
+        }
+
+        /* Slide counter pill */
+        .slide-counter {
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.1em;
+        }
+
+        /* Cinematic letterbox bars */
+        .letterbox-top, .letterbox-bottom {
+            position: absolute;
+            left: 0; right: 0;
+            height: 8vh;
+            background: #000;
+            z-index: 25;
+            pointer-events: none;
+        }
+        .letterbox-top { top: 0; }
+        .letterbox-bottom { bottom: 0; }
+
+        /* Music toggle button */
+        .music-toggle {
+            position: absolute;
+            top: 12vh;
+            right: 16px;
+            z-index: 35;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .music-toggle .bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 16px;
+        }
+
+        .music-toggle .bar {
+            width: 3px;
+            background: rgba(255, 180, 200, 0.6);
+            border-radius: 2px;
+            transition: height 0.3s ease, background 0.3s ease;
+        }
+
+        .music-toggle.playing .bar {
+            animation: soundBar 0.8s ease-in-out infinite alternate;
+            background: rgba(255, 150, 180, 0.8);
+        }
+        .music-toggle.playing .bar:nth-child(1) { animation-delay: 0s; }
+        .music-toggle.playing .bar:nth-child(2) { animation-delay: 0.15s; }
+        .music-toggle.playing .bar:nth-child(3) { animation-delay: 0.3s; }
+        .music-toggle.playing .bar:nth-child(4) { animation-delay: 0.1s; }
+        .music-toggle.playing .bar:nth-child(5) { animation-delay: 0.25s; }
+
+        .music-toggle:not(.playing) .bar {
+            height: 4px !important;
+            opacity: 0.4;
+        }
+
+        @keyframes soundBar {
+            0% { height: 4px; }
+            100% { height: 16px; }
+        }
+
+        .music-label {
+            font-size: 8px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 180, 200, 0.5);
+            text-align: center;
+            margin-top: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .music-toggle:hover .music-label {
+            color: rgba(255, 180, 200, 0.8);
+        }
+        .music-toggle:hover .bar {
+            background: rgba(255, 150, 180, 1);
+        }
+
+        /* Subtle film grain overlay */
+        .grain-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 128px 128px;
+            z-index: 15;
+        }
+
+        /* ===== RESPONSIVE ===== */
+
+        /* Large desktops (min-width: 1440px) */
+        @media (min-width: 1440px) {
+            .pulse-ring {
+                width: 400px; height: 400px;
+            }
+        }
+
+        /* Tablets portrait (max-width: 1024px) */
+        @media (max-width: 1024px) {
+            .orb-1 { width: 320px; height: 320px; }
+            .orb-2 { width: 280px; height: 280px; }
+        }
+
+        /* Phones & small tablets (max-width: 768px) */
+        @media (max-width: 768px) {
+            .letterbox-top, .letterbox-bottom {
+                height: 4vh;
+            }
+            .ambient-orb { filter: blur(60px); }
+            .orb-1 { width: 250px; height: 250px; }
+            .orb-2 { width: 220px; height: 220px; }
+            .orb-3 { width: 160px; height: 160px; }
+            .pulse-ring {
+                width: 220px; height: 220px;
+            }
+            .music-toggle {
+                top: 6vh;
+                right: 12px;
+            }
+        }
+
+        /* Small phones (max-width: 480px) */
+        @media (max-width: 480px) {
+            .letterbox-top, .letterbox-bottom {
+                height: 2.5vh;
+            }
+            .ambient-orb { filter: blur(50px); }
+            .orb-1 { width: 180px; height: 180px; }
+            .orb-2 { width: 150px; height: 150px; }
+            .orb-3 { width: 100px; height: 100px; }
+            .pulse-ring {
+                width: 160px; height: 160px;
+            }
+            .deco-line { width: 40px; }
+            .music-toggle {
+                top: 4vh;
+                right: 10px;
+            }
+            .music-toggle .bars { height: 12px; }
+            .music-toggle .bar { width: 2px; }
+            .music-label { font-size: 7px; }
+        }
+
+        /* Very narrow phones (max-width: 360px) */
+        @media (max-width: 360px) {
+            .letterbox-top, .letterbox-bottom {
+                height: 2vh;
+            }
+            .pulse-ring {
+                width: 130px; height: 130px;
+            }
+            .deco-line { width: 30px; }
+        }
+
+        /* Landscape phones */
+        @media (max-height: 500px) {
+            .letterbox-top, .letterbox-bottom {
+                height: 1.5vh;
+            }
+            .music-toggle {
+                top: 4vh;
+                right: 12px;
+            }
+        }
+
+        /* Landscape phones — very cramped */
+        @media (max-height: 420px) {
+            .letterbox-top, .letterbox-bottom {
+                display: none;
+            }
+        }
+
+        /* Safe area for notched phones (iPhone X+) */
+        @supports (padding: env(safe-area-inset-top)) {
+            .letterbox-top {
+                padding-top: env(safe-area-inset-top);
+            }
+            .letterbox-bottom {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+            .music-toggle {
+                right: calc(12px + env(safe-area-inset-right));
+            }
+        }
+    </style>
+</head>
+<body class="bg-cinematic text-white h-screen flex flex-col items-center justify-center relative" style="height: 100dvh;">
+
+    <!-- Cinematic Letterbox Bars -->
+    <div class="letterbox-top"></div>
+    <div class="letterbox-bottom"></div>
+
+    <!-- Ambient Light Orbs -->
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <!-- Music Toggle Button -->
+    <button id="music-toggle" class="music-toggle glass-panel p-2 sm:p-3 rounded-xl" onclick="toggleMusic()" aria-label="Toggle Music">
+        <div class="bars">
+            <div class="bar" style="height: 6px;"></div>
+            <div class="bar" style="height: 12px;"></div>
+            <div class="bar" style="height: 8px;"></div>
+            <div class="bar" style="height: 14px;"></div>
+            <div class="bar" style="height: 10px;"></div>
+        </div>
+        <div class="music-label">Music</div>
+    </button>
+
+    <!-- Film Grain -->
+    <div class="grain-overlay"></div>
+
+    <!-- Ambient Light/Noise Layers -->
+    <div class="absolute inset-0 vignette z-10"></div>
+    <div id="hearts-container" class="absolute inset-0 z-0 overflow-hidden"></div>
+    <div id="sparkle-container" class="absolute inset-0 z-0 overflow-hidden pointer-events-none"></div>
+
+    <!-- Main Content Container -->
+    <main class="relative z-20 w-full max-w-5xl px-4 sm:px-6 lg:px-8 text-center flex-1 flex items-center justify-center min-h-0">
+        
+        <!-- Slides will be injected here by JS -->
+        <div id="slide-container" class="relative w-full h-full flex items-center justify-center">
+            <!-- Content populates dynamically -->
+        </div>
+
+    </main>
+
+    <!-- Navigation Controls -->
+    <div class="relative z-30 flex flex-col items-center gap-1.5 sm:gap-2 md:gap-3 w-full px-4 pb-3 sm:pb-5 md:pb-6 pt-1 shrink-0">
+        
+        <!-- Progress Bar & Counter -->
+        <div class="flex items-center gap-3 sm:gap-4">
+            <div class="progress-track w-32 sm:w-48 md:w-64 h-[2px] sm:h-[3px] bg-white/10 rounded-full overflow-hidden">
+                <div id="progress-bar" class="h-full w-0 rounded-full"></div>
+            </div>
+            <span id="slide-counter" class="slide-counter text-[10px] sm:text-xs text-pink-300/50 font-light">1 / 7</span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex gap-3 sm:gap-4 items-center">
+            <button onclick="changeSlide(-1)" class="glass-panel p-2 sm:p-3 rounded-full active:scale-90 group" style="-webkit-tap-highlight-color:transparent" aria-label="Previous Slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sm:w-5 sm:h-5 text-pink-300/70 group-hover:text-pink-100 transition-colors"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            
+            <button id="play-pause" onclick="toggleAutoPlay()" class="glass-panel px-3 sm:px-5 py-1 sm:py-2 rounded-full text-[9px] sm:text-xs tracking-[0.15em] sm:tracking-[0.2em] uppercase font-light text-pink-200/80 hover:text-white transition-colors" style="-webkit-tap-highlight-color:transparent">
+                ❚❚ Pause
+            </button>
+
+            <button onclick="changeSlide(1)" class="glass-panel p-2 sm:p-3 rounded-full active:scale-90 group" style="-webkit-tap-highlight-color:transparent" aria-label="Next Slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sm:w-5 sm:h-5 text-pink-300/70 group-hover:text-pink-100 transition-colors"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+        </div>
+        
+        <!-- Small Footer Credit -->
+        <div class="text-[7px] sm:text-[9px] md:text-[10px] text-white/20 font-light tracking-[0.2em] sm:tracking-[0.25em] uppercase">
+            Designed by Marvin Ferrer
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- Configuration ---
+        const SLIDE_DURATION = 5000;
+        const slidesData = [
+            {
+                title: "To You, Yes You",
+                text: "I was looking for the perfect way to brighten your day...",
+                sub: "Something elegant, classy, and unforgettable.",
+                icon: "✨"
+            },
+            {
+                title: "But Then I Realized",
+                text: "Flowers die. Chocolates get eaten. Gift cards feel lazy.",
+                sub: "(And honestly, my wallet said no. 😅)",
+                icon: "💸"
+            },
+            {
+                title: "So Instead...",
+                text: "I decided to build something priceless.",
+                sub: "My undivided attention? A hug? No...",
+                icon: "🤔"
+            },
+            {
+                title: "I Code... I Mean, I Care!",
+                text: "So I made this website just for you.",
+                sub: "Because you deserve cinematic grandeur.",
+                icon: "💻"
+            },
+            {
+                title: "In All Seriousness",
+                text: "Every person who sees this matters.",
+                sub: "Life is better because you're in it.",
+                icon: "🌟"
+            },
+            {
+                title: "My Promise To You",
+                text: "Whether we're close or just crossing paths — I hope this made you smile.",
+                sub: "The world needs more kindness, and you deserve some today. ❤️",
+                icon: "🤝"
+            },
+            {
+                title: "Happy Valentine's Day!",
+                text: "Sending love to everyone — near, far, and everywhere in between!",
+                sub: "Made with ❤️ by Marvin Ferrer",
+                isFinal: true
+            }
+        ];
+
+        // --- State ---
+        let currentSlideIndex = 0;
+        let autoPlayInterval;
+        let isPlaying = true;
+        let progressBarTimeout;
+
+        // --- DOM Elements ---
+        const container = document.getElementById('slide-container');
+        const progressBar = document.getElementById('progress-bar');
+        const playPauseBtn = document.getElementById('play-pause');
+        const slideCounterEl = document.getElementById('slide-counter');
+
+        // --- Initialization ---
+        function init() {
+            renderAllSlides();
+            showSlide(0);
+            startFloatingHearts();
+            startAutoPlay();
+            createSparkles();
+            initMusic();
+        }
+
+        // --- Core Logic ---
+        function renderAllSlides() {
+            container.innerHTML = slidesData.map((slide, index) => {
+                const isFinal = slide.isFinal;
+
+                if (isFinal) {
+                    return `
+                        <div id="slide-${index}" class="absolute inset-0 flex flex-col items-center justify-center px-3 sm:px-6 slide-hidden">
+                            <div class="pulse-ring"></div>
+                            <div class="pulse-ring"></div>
+                            <div class="pulse-ring"></div>
+                            <div class="relative z-10 flex flex-col items-center w-full max-w-3xl">
+                                <div class="slide-child icon-float text-2xl sm:text-3xl md:text-5xl lg:text-6xl mb-2 sm:mb-3 md:mb-5">❤️</div>
+                                <h1 class="slide-child final-title text-[1.6rem] sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl mb-1 sm:mb-3 leading-tight">${slide.title}</h1>
+                                <div class="slide-child deco-line my-1.5 sm:my-2 md:my-3"></div>
+                                <p class="slide-child text-xs sm:text-sm md:text-lg lg:text-xl text-pink-100/90 font-light tracking-wide px-1 sm:px-2 leading-relaxed">${slide.text}</p>
+                                <p class="slide-child text-[10px] sm:text-xs md:text-sm text-pink-300/60 italic mt-2 sm:mt-3 md:mt-5 tracking-wider px-1 sm:px-2">${slide.sub}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div id="slide-${index}" class="absolute inset-0 flex flex-col items-center justify-center px-3 sm:px-6 slide-hidden">
+                        <div class="slide-child icon-float text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-2 sm:mb-3 md:mb-4">${slide.icon || '❤️'}</div>
+                        <h1 class="slide-child font-['Cinzel'] text-base sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl text-pink-100 mb-1.5 sm:mb-2 tracking-wider leading-snug glow-text px-1 sm:px-2">${slide.title}</h1>
+                        <div class="slide-child deco-line my-1.5 sm:my-2"></div>
+                        <p class="slide-child text-xs sm:text-sm md:text-base lg:text-xl xl:text-2xl text-white/90 font-light mb-1 max-w-2xl px-1 sm:px-2 leading-relaxed">${slide.text}</p>
+                        <p class="slide-child text-[10px] sm:text-xs md:text-sm text-pink-300/60 italic mt-0.5 sm:mt-1 px-1 sm:px-2">${slide.sub}</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function showSlide(index) {
+            // Hide all slides
+            slidesData.forEach((_, i) => {
+                const el = document.getElementById(`slide-${i}`);
+                el.classList.remove('slide-active');
+                el.classList.add('slide-hidden');
+            });
+
+            // Show target slide
+            const activeEl = document.getElementById(`slide-${index}`);
+            activeEl.classList.remove('slide-hidden');
+            activeEl.classList.add('slide-active');
+
+            // Re-trigger staggered child animations
+            const children = activeEl.querySelectorAll('.slide-child');
+            children.forEach(child => {
+                child.style.animation = 'none';
+                child.offsetHeight; /* trigger reflow */
+                child.style.animation = '';
+            });
+
+            // Update State
+            currentSlideIndex = index;
+            resetProgressBar();
+            updateCounter();
+        }
+
+        function updateCounter() {
+            slideCounterEl.textContent = `${currentSlideIndex + 1} / ${slidesData.length}`;
+        }
+
+        function nextSlide() {
+            const nextIndex = (currentSlideIndex + 1) % slidesData.length;
+            showSlide(nextIndex);
+        }
+
+        function prevSlide() {
+            const prevIndex = (currentSlideIndex - 1 + slidesData.length) % slidesData.length;
+            showSlide(prevIndex);
+        }
+
+        function changeSlide(direction) {
+            stopAutoPlay(); 
+            playPauseBtn.innerHTML = "&#9654; Play";
+            
+            if (direction === 1) nextSlide();
+            else prevSlide();
+        }
+
+        // --- Auto Play System ---
+        function startAutoPlay() {
+            isPlaying = true;
+            playPauseBtn.innerHTML = "❚❚ Pause";
+            resetProgressBar();
+            
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = setInterval(() => {
+                nextSlide();
+            }, SLIDE_DURATION);
+        }
+
+        function stopAutoPlay() {
+            isPlaying = false;
+            clearInterval(autoPlayInterval);
+            progressBar.style.width = '0%';
+            progressBar.style.transition = 'none';
+        }
+
+        function toggleAutoPlay() {
+            if (isPlaying) {
+                stopAutoPlay();
+                playPauseBtn.innerHTML = "&#9654; Play";
+            } else {
+                startAutoPlay();
+            }
+        }
+
+        function resetProgressBar() {
+            if (!isPlaying) return;
+            
+            progressBar.style.transition = 'none';
+            progressBar.style.width = '0%';
+            
+            void progressBar.offsetWidth;
+
+            progressBar.style.transition = `width ${SLIDE_DURATION}ms linear`;
+            progressBar.style.width = '100%';
+        }
+
+        // --- Responsive helpers ---
+        function isMobile() {
+            return window.innerWidth <= 768;
+        }
+
+        // --- Visual Effects ---
+        function startFloatingHearts() {
+            const heartContainer = document.getElementById('hearts-container');
+            const emojis = ['❤️', '💖', '💕', '✨', '🌹', '💗', '🤍'];
+            const styles = ['style-a', 'style-b', 'style-c'];
+            const interval = isMobile() ? 1000 : 600; // fewer hearts on mobile
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                
+                const styleClass = styles[Math.floor(Math.random() * styles.length)];
+                heart.classList.add('heart-particle', styleClass);
+                
+                const startLeft = Math.random() * 100;
+                const duration = 7 + Math.random() * 8;
+                const size = isMobile() ? (0.5 + Math.random() * 0.5) : (0.7 + Math.random() * 0.8); 
+                
+                heart.style.left = `${startLeft}%`;
+                heart.style.setProperty('--dur', `${duration}s`);
+                heart.style.fontSize = `${size}rem`;
+                heart.style.filter = `drop-shadow(0 0 ${4 + Math.random() * 8}px rgba(255, 100, 150, 0.4))`;
+                
+                heartContainer.appendChild(heart);
+
+                setTimeout(() => heart.remove(), duration * 1000);
+            }, interval);
+        }
+
+        function createSparkles() {
+            const sparkleContainer = document.getElementById('sparkle-container');
+            const count = isMobile() ? 20 : 40; // fewer sparkles on mobile
+
+            for (let i = 0; i < count; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = `${Math.random() * 100}%`;
+                sparkle.style.top = `${Math.random() * 100}%`;
+                sparkle.style.setProperty('--duration', `${2 + Math.random() * 4}s`);
+                sparkle.style.setProperty('--delay', `${Math.random() * 5}s`);
+                sparkle.style.setProperty('--max-opacity', `${0.2 + Math.random() * 0.5}`);
+                sparkle.style.width = `${1 + Math.random() * 3}px`;
+                sparkle.style.height = sparkle.style.width;
+                sparkleContainer.appendChild(sparkle);
+            }
+        }
+
+        // --- Keyboard Support ---
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                changeSlide(-1);
+            }
+        });
+
+        // --- Touch Swipe Support ---
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diffX = touchStartX - touchEndX;
+            const diffY = Math.abs(e.changedTouches[0].screenY - touchStartY);
+            
+            // Only trigger if horizontal swipe is dominant and > 50px
+            if (Math.abs(diffX) > 50 && Math.abs(diffX) > diffY) {
+                if (diffX > 0) {
+                    changeSlide(1);  // swipe left → next
+                } else {
+                    changeSlide(-1); // swipe right → prev
+                }
+            }
+        }, { passive: true });
+
+        // Start
+        window.onload = init;
+
+        // --- Ambient Music Engine (Web Audio API) ---
+        let audioCtx = null;
+        let musicPlaying = false;
+        let musicGain = null;
+        let musicInterval = null;
+        let activeSources = [];
+
+        // Romantic chord progression: Am - F - C - G (with extensions)
+        const chords = [
+            [220.00, 261.63, 329.63, 440.00],  // Am (A3, C4, E4, A4)
+            [174.61, 220.00, 261.63, 349.23],  // F  (F3, A3, C4, F4)
+            [130.81, 164.81, 196.00, 261.63],  // C  (C3, E3, G3, C4)
+            [196.00, 246.94, 293.66, 392.00],  // G  (G3, B3, D4, G4)
+            [220.00, 277.18, 329.63, 440.00],  // Am (A3, C#4, E4, A4) - slight variation
+            [174.61, 220.00, 261.63, 349.23],  // F
+            [261.63, 329.63, 392.00, 523.25],  // C  (C4, E4, G4, C5) - higher voicing
+            [196.00, 246.94, 293.66, 392.00],  // G
+        ];
+
+        // Melody notes that float over the chords
+        const melodies = [
+            [523.25, 493.88, 440.00, 493.88],  // C5, B4, A4, B4
+            [440.00, 523.25, 587.33, 523.25],  // A4, C5, D5, C5
+            [523.25, 587.33, 659.25, 587.33],  // C5, D5, E5, D5
+            [493.88, 440.00, 392.00, 440.00],  // B4, A4, G4, A4
+            [523.25, 493.88, 440.00, 523.25],
+            [440.00, 392.00, 440.00, 523.25],
+            [659.25, 587.33, 523.25, 587.33],
+            [493.88, 523.25, 587.33, 523.25],
+        ];
+
+        function initMusic() {
+            // Music starts on first user interaction
+            const startOnInteraction = () => {
+                if (!audioCtx) {
+                    startMusic();
+                    document.removeEventListener('click', startOnInteraction);
+                    document.removeEventListener('touchstart', startOnInteraction);
+                }
+            };
+            document.addEventListener('click', startOnInteraction);
+            document.addEventListener('touchstart', startOnInteraction);
+        }
+
+        function createAudioContext() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // Master gain
+            musicGain = audioCtx.createGain();
+            musicGain.gain.value = 0;
+            
+            // Reverb-like effect using delay
+            const convolver = audioCtx.createConvolver();
+            const reverbLength = 2 * audioCtx.sampleRate;
+            const impulse = audioCtx.createBuffer(2, reverbLength, audioCtx.sampleRate);
+            for (let ch = 0; ch < 2; ch++) {
+                const data = impulse.getChannelData(ch);
+                for (let i = 0; i < reverbLength; i++) {
+                    data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / reverbLength, 2.5);
+                }
+            }
+            convolver.buffer = impulse;
+
+            // Wet/dry mix
+            const dryGain = audioCtx.createGain();
+            dryGain.gain.value = 0.6;
+            const wetGain = audioCtx.createGain();
+            wetGain.gain.value = 0.4;
+
+            musicGain.connect(dryGain);
+            musicGain.connect(convolver);
+            convolver.connect(wetGain);
+            dryGain.connect(audioCtx.destination);
+            wetGain.connect(audioCtx.destination);
+
+            // Fade in
+            musicGain.gain.linearRampToValueAtTime(0.12, audioCtx.currentTime + 3);
+        }
+
+        function playNote(freq, startTime, duration, type = 'sine', volume = 0.08) {
+            if (!audioCtx) return;
+            
+            const osc = audioCtx.createOscillator();
+            const noteGain = audioCtx.createGain();
+            
+            osc.type = type;
+            osc.frequency.value = freq;
+            
+            // Soft envelope (piano-like ADSR)
+            const attack = 0.08;
+            const decay = 0.3;
+            const sustain = volume * 0.5;
+            const release = duration * 0.4;
+            
+            noteGain.gain.setValueAtTime(0, startTime);
+            noteGain.gain.linearRampToValueAtTime(volume, startTime + attack);
+            noteGain.gain.linearRampToValueAtTime(sustain, startTime + attack + decay);
+            noteGain.gain.setValueAtTime(sustain, startTime + duration - release);
+            noteGain.gain.linearRampToValueAtTime(0, startTime + duration);
+            
+            osc.connect(noteGain);
+            noteGain.connect(musicGain);
+            
+            osc.start(startTime);
+            osc.stop(startTime + duration + 0.1);
+            
+            activeSources.push(osc);
+            osc.onended = () => {
+                activeSources = activeSources.filter(s => s !== osc);
+            };
+        }
+
+        function playChordProgression() {
+            if (!audioCtx || !musicPlaying) return;
+            
+            const now = audioCtx.currentTime;
+            const chordDuration = 3.2; // seconds per chord
+            const melodyNoteDuration = chordDuration / 4;
+            
+            chords.forEach((chord, chordIndex) => {
+                const chordStart = now + (chordIndex * chordDuration);
+                
+                // Play chord tones (soft pad)
+                chord.forEach((freq, noteIndex) => {
+                    // Slight stagger for arpeggiated feel
+                    const stagger = noteIndex * 0.06;
+                    playNote(freq, chordStart + stagger, chordDuration - 0.1, 'sine', 0.04);
+                    // Add a triangle layer for warmth
+                    playNote(freq, chordStart + stagger, chordDuration - 0.1, 'triangle', 0.02);
+                });
+                
+                // Play melody notes
+                const melody = melodies[chordIndex];
+                melody.forEach((note, i) => {
+                    const noteStart = chordStart + (i * melodyNoteDuration) + 0.1;
+                    playNote(note, noteStart, melodyNoteDuration * 1.2, 'sine', 0.06);
+                });
+                
+                // Subtle bass note (octave below root)
+                playNote(chord[0] / 2, chordStart, chordDuration, 'sine', 0.03);
+            });
+            
+            // Schedule next progression
+            const totalDuration = chords.length * chordDuration;
+            musicInterval = setTimeout(() => {
+                playChordProgression();
+            }, totalDuration * 1000 - 200); // slight overlap for seamless loop
+        }
+
+        function startMusic() {
+            if (!audioCtx) createAudioContext();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            musicPlaying = true;
+            document.getElementById('music-toggle').classList.add('playing');
+            
+            // Fade in
+            musicGain.gain.cancelScheduledValues(audioCtx.currentTime);
+            musicGain.gain.linearRampToValueAtTime(0.12, audioCtx.currentTime + 2);
+            
+            playChordProgression();
+        }
+
+        function stopMusic() {
+            musicPlaying = false;
+            document.getElementById('music-toggle').classList.remove('playing');
+            
+            if (musicInterval) {
+                clearTimeout(musicInterval);
+                musicInterval = null;
+            }
+            
+            if (musicGain) {
+                // Fade out
+                musicGain.gain.cancelScheduledValues(audioCtx.currentTime);
+                musicGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
+            }
+        }
+
+        function toggleMusic() {
+            if (!audioCtx) {
+                startMusic();
+                return;
+            }
+            if (musicPlaying) {
+                stopMusic();
+            } else {
+                startMusic();
+            }
+        }
+
+    </script>
+</body>
+</html>
